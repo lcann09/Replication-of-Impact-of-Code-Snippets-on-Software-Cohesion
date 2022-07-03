@@ -47,7 +47,7 @@ CC uses the idea of measuring the similarity between pairs of methods. In terms 
 In LSCC, k represents the number of methods in the class while l is the number of attributes. It first categorizes extreme cases where it is clear the class is either very cohesive or not cohesive at all. To evaluate classes which lie somewhere in between, it uses the Method Attribute Reference (MAR) to calculate the ratio of summation of common attributes to the total number of methods and attributes in the class. The MAR of a class is an k by l array where each row corresponds to a method and each column corresponds to an attribute. Then entry (i,j) of the MAR is 1 if method i contains attribute j and 0 otherwise. Each xi in the LSCC formula corresponds to the sum of the ith column of the MAR, which means the number of methods which use attribute i. For ease of computation we store the MAR in our code as a 1 by l array of the already summed column values. An example MAR from [3] where the matrix was first defined is shown in table 1 to further clarify the concept. This is an example corresponding to a hypothetical example where each print_ represents a method of the same name and the class has the attribute x,y, and z. 
 
 
-<img width="600" alt="image" src="https://user-images.githubusercontent.com/47286892/177054179-d0702b06-cae6-438b-8e81-385b961535d5.png">
+<img width="350" alt="image" src="https://user-images.githubusercontent.com/47286892/177054179-d0702b06-cae6-438b-8e81-385b961535d5.png">
 Table 1: an example MAR
 
 ### Research Questions
