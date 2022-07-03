@@ -38,16 +38,16 @@ Due to time constraints and underestimating the difficulty of obtaining our comp
 
 Following the choices in [2], we use the metrics Class Cohesion (CC) [6] and Low-level Similarity-based Class Cohesion (LSCC) [3] to measure the code cohesion of the pre- and post-SO snapshots. Both metrics output values in the range of [0,1] where 1 represents perfect class cohesion. 
 
-<img width="579" alt="image" src="https://user-images.githubusercontent.com/47286892/177054132-e03d1046-8bee-4296-a21c-d9a91de08483.png">
+<img width="400" alt="image" src="https://user-images.githubusercontent.com/47286892/177054132-e03d1046-8bee-4296-a21c-d9a91de08483.png">
 
 CC uses the idea of measuring the similarity between pairs of methods. In terms of the equation Ii represents the set of attributes referenced by method i and k is the total number of methods in the class. The fraction in absolute values is the similarity between method i and method j, calculating the ratio of attributes they have in common over the number of attributes they reference in total. Then taking the summation of all the similarities between each pair of methods in the class gives our total measure of cohesion.
 
-<img width="992" alt="image" src="https://user-images.githubusercontent.com/47286892/177054155-e8bdf3eb-9f44-4ca2-847d-7bbc32923007.png">
+<img width="500" alt="image" src="https://user-images.githubusercontent.com/47286892/177054155-e8bdf3eb-9f44-4ca2-847d-7bbc32923007.png">
 
 In LSCC, k represents the number of methods in the class while l is the number of attributes. It first categorizes extreme cases where it is clear the class is either very cohesive or not cohesive at all. To evaluate classes which lie somewhere in between, it uses the Method Attribute Reference (MAR) to calculate the ratio of summation of common attributes to the total number of methods and attributes in the class. The MAR of a class is an k by l array where each row corresponds to a method and each column corresponds to an attribute. Then entry (i,j) of the MAR is 1 if method i contains attribute j and 0 otherwise. Each xi in the LSCC formula corresponds to the sum of the ith column of the MAR, which means the number of methods which use attribute i. For ease of computation we store the MAR in our code as a 1 by l array of the already summed column values. An example MAR from [3] where the matrix was first defined is shown in table 1 to further clarify the concept. This is an example corresponding to a hypothetical example where each print_ represents a method of the same name and the class has the attribute x,y, and z. 
 
 
-<img width="743" alt="image" src="https://user-images.githubusercontent.com/47286892/177054179-d0702b06-cae6-438b-8e81-385b961535d5.png">
+<img width="600" alt="image" src="https://user-images.githubusercontent.com/47286892/177054179-d0702b06-cae6-438b-8e81-385b961535d5.png">
 Table 1: an example MAR
 
 ### Research Questions
@@ -112,17 +112,26 @@ Future studies that could expand upon these findings could include expanding the
 ## References
 
 [1] R. Abdalkareem, E. Shihab, and J. Rilling, “On code reuse from stackoverflow: An exploratory study on android apps,” Information and Software Technology, vol. 88, pp. 148–158, 2017. 
+
 [2] Ahmad, Mashal & Ó Cinnéide, Mel. (2019). “Impact of stack overflow code snippets on software cohesion: a preliminary study”. 10.13140/RG.2.2.14791.75688. 
+
 [3] J. Al Dallal and L. C. Briand, “A precise method-method interaction based cohesion metric for object-oriented classes,” ACM Transactions on Software Engineering and Methodology (TOSEM), vol. 21, no. 2, p. 8, 2012.
+
 [4] S. Baltes, C. Treude, and S. Diehl, “SOTorrent: Studying the origin, evolution, and usage of stack overflow code snippets,” in Proceedings of the 16th International Conference on Mining Software Repositories (MSR 2019), 2019.
+
 [5] “BigQuery,” https://cloud.google.com/bigquery, 2010.
+
 [6] C. Bonja and E. Kidanmariam, “Metrics for class cohesion and similarity between methods,” in Proceedings of the 44th annual Southeast regional conference. ACM, 2006, pp. 91–95.
+
 [7] Nicolas E. Gold and Jens Krinke. 2020. “Ethical Mining: A Case Study on MSR Mining Challenges,” In Proceedings of the 17th International Conference on Mining Software Repositories (MSR '20). Association for Computing Machinery, New York, NY, USA, 265–276. DOI:https://doi.org/10.1145/3379597.3387462
+
 [8] S. McConnell and S.M. McConnell. 1993. “Code Complete: A Practical Handbook of Software Construction”. Microsoft Press
+
 [9] S. Meldrum, S.A. Licorish, C.A. Owen, B.T.R. Savarimuthu. “Understanding stack overflow code quality: A recommendation of caution,” Sci. Comput. Programm., 199 (2020), 10.1016/j.scico.2020.102516
+
 [10] C. Ragkhitwetsagul, J. Krinke, M. Paixao, G. Bianco, and R. Oliveto, “Toxic code snippets on stack overflow,” arXiv preprint arXiv:1806.07659, 2018.
+
 [11] T. Zhang, G. Upadhyaya, A. Reinhardt, H. Rajan, and M. Kim, “Are code examples on an online Q&A forum reliable?: A study of API misuse on stack overflow,” in Proceedings of the 40th International Conference on Software Engineering, ser. ICSE ’18. New York, NY, USA: ACM, 2018, pp. 886–896.
-![image](https://user-images.githubusercontent.com/47286892/177054331-80033d35-f638-4d97-8ec9-3aa75c9b37bc.png)
 
 
 
