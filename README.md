@@ -27,5 +27,6 @@ In comparison to previous papers, [2] takes a somewhat novel approach by instead
 
 The dataset we use is the SOTorrent dataset [4] which was used as the basis for the MSR 2019 Mining Challenge and is thus the same as in the original paper [2]. This dataset includes a table called PostReferenceGH which links SO posts to GitHub files in which the posts are used or referenced. We use the tool BigQuery from Google to access the database and select our samples [5]. We select samples in the same way as [2], choosing 489 random samples of files which meet our three sample criteria which are as follows. First the files must be in java, as having samples in different languages makes it difficult to get the parameters we will use for our metrics and it is a very popular language. Second, the first commit cannot contain the copied SO snippet since if there is no commit without the SO snippet, we have nothing to compare with the commit containing the snippet. Lastly, the sample must have at least three commits since otherwise we cannot fully assess project cohesion over time in projects with less than three commits. The full process diagram of our workflow can be seen in figure 1.
 
-![image](https://user-images.githubusercontent.com/47286892/177054062-88bf57c8-8817-4880-93e1-164ebddcab78.png)
-Figure 1: Process Diagram
+![Untitled drawio (2)](https://user-images.githubusercontent.com/47286892/177054079-44f146e8-1ff3-46a9-8808-7741b1f8b143.png)
+_Figure 1: Process Diagram_
+
