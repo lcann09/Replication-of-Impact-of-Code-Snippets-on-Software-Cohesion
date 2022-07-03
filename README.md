@@ -30,3 +30,22 @@ The dataset we use is the SOTorrent dataset [4] which was used as the basis for 
 ![Untitled drawio (2)](https://user-images.githubusercontent.com/47286892/177054079-44f146e8-1ff3-46a9-8808-7741b1f8b143.png)
 _Figure 1: Process Diagram_
 
+After selecting initial samples with the .java extension from the PostReferenceGH table in SOTorrent, we used the Github API to then identify which samples met the remaining criteria.  For the final dataset we needed the file version just before the SO snippet was introduced, called the pre-SO snapshot and the file version just after, called the post-SO snapshot. For a select subset of the projects classified as deteriorating (see Results section for more details) we also require the file history after the post-SO snapshot. To obtain needed commits, we used GitHub api to find and obtain all of the files that correspond to the chosen samples starting from the post-SO snapshot to the most recent commit. 
+
+Due to time constraints and underestimating the difficulty of obtaining our complete dataset we were unable to analyze data related to python projects and only obtained a dataset for Java projects as in [2].
+
+### Metrics
+
+Following the choices in [2], we use the metrics Class Cohesion (CC) [6] and Low-level Similarity-based Class Cohesion (LSCC) [3] to measure the code cohesion of the pre- and post-SO snapshots. Both metrics output values in the range of [0,1] where 1 represents perfect class cohesion. 
+
+CC=2/(k(k-1)) ∑_(i=1)^(k-1)▒∑_(j=i+1)^k▒|I_i∩I_j |/|I_i∪I_j | 
+
+CC uses the idea of measuring the similarity between pairs of methods. In terms of the equation Ii represents the set of attributes referenced by method i and k is the total number of methods in the class. The fraction in absolute values is the similarity between method i and method j, calculating the ratio of attributes they have in common over the number of attributes they reference in total. Then taking the summation of all the similarities between each pair of methods in the class gives our total measure of cohesion.
+
+LSCC=
+ {█(0                                    if l=0 and k>l,@  1                if (l>0 and k=0)or k=1,@1/lk(k-1)  ∑_(i=1)^l▒〖x^i (x^i-1)                    otherwise〗)┤
+
+In LSCC, k represents the number of methods in the class while l is the number of attributes. It first categorizes extreme cases where it is clear the class is either very cohesive or not cohesive at all. To evaluate classes which lie somewhere in between, it uses the Method Attribute Reference (MAR) to calculate the ratio of summation of common attributes to the total number of methods and attributes in the class. The MAR of a class is an k by l array where each row corresponds to a method and each column corresponds to an attribute. Then entry (i,j) of the MAR is 1 if method i contains attribute j and 0 otherwise. Each xi in the LSCC formula corresponds to the sum of the ith column of the MAR, which means the number of methods which use attribute i. For ease of computation we store the MAR in our code as a 1 by l array of the already summed column values. An example MAR from [3] where the matrix was first defined is shown in table 1 to further clarify the concept. This is an example corresponding to a hypothetical example where each print_ represents a method of the same name and the class has the attribute x,y, and z. 
+
+
+
