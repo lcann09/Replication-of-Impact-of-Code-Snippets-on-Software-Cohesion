@@ -1,5 +1,6 @@
 # Data Science Project: Replication of Impact of Stack Overflow Code Snippets on Software Cohesion
 
+For more details, check out the Python Notebook!
 
 ## Introduction
 
