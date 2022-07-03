@@ -42,12 +42,12 @@ Following the choices in [2], we use the metrics Class Cohesion (CC) [6] and Low
 
 CC uses the idea of measuring the similarity between pairs of methods. In terms of the equation Ii represents the set of attributes referenced by method i and k is the total number of methods in the class. The fraction in absolute values is the similarity between method i and method j, calculating the ratio of attributes they have in common over the number of attributes they reference in total. Then taking the summation of all the similarities between each pair of methods in the class gives our total measure of cohesion.
 
-<img width="500" alt="image" src="https://user-images.githubusercontent.com/47286892/177054155-e8bdf3eb-9f44-4ca2-847d-7bbc32923007.png">
+<img width="480" alt="image" src="https://user-images.githubusercontent.com/47286892/177054155-e8bdf3eb-9f44-4ca2-847d-7bbc32923007.png">
 
 In LSCC, k represents the number of methods in the class while l is the number of attributes. It first categorizes extreme cases where it is clear the class is either very cohesive or not cohesive at all. To evaluate classes which lie somewhere in between, it uses the Method Attribute Reference (MAR) to calculate the ratio of summation of common attributes to the total number of methods and attributes in the class. The MAR of a class is an k by l array where each row corresponds to a method and each column corresponds to an attribute. Then entry (i,j) of the MAR is 1 if method i contains attribute j and 0 otherwise. Each xi in the LSCC formula corresponds to the sum of the ith column of the MAR, which means the number of methods which use attribute i. For ease of computation we store the MAR in our code as a 1 by l array of the already summed column values. An example MAR from [3] where the matrix was first defined is shown in table 1 to further clarify the concept. This is an example corresponding to a hypothetical example where each print_ represents a method of the same name and the class has the attribute x,y, and z. 
 
 
-<img width="350" alt="image" src="https://user-images.githubusercontent.com/47286892/177054179-d0702b06-cae6-438b-8e81-385b961535d5.png">
+<img width="400" alt="image" src="https://user-images.githubusercontent.com/47286892/177054179-d0702b06-cae6-438b-8e81-385b961535d5.png">
 Table 1: an example MAR
 
 ### Research Questions
@@ -68,17 +68,17 @@ We classify the change values for the cohesion metrics of the pre- and post- SO 
 
 When comparing our graphs with those of the [2], we obtained surprisingly similar results however we found both a higher percentage of constant (45.3% vs 39% for LSCC and 44.4% vs 42% for CC) and improving (21.8% vs 19% for LSCC and 20.9% vs 16% for CC) cases and thus subsequently a decrease in the deteriorating (32.9% vs 42% for LSCC and 34.7% vs 42% for CC) cases.
 
-<img width="391" alt="image" src="https://user-images.githubusercontent.com/47286892/177054229-e36d19ec-7b19-4776-81ea-1cf4800b6bfd.png">
+<img width="380" alt="image" src="https://user-images.githubusercontent.com/47286892/177054229-e36d19ec-7b19-4776-81ea-1cf4800b6bfd.png">
 Figure 2: categorical breakdown of overall CC changes from pre-SO snapshots to Post-SO snapshots
 
-<img width="390" alt="image" src="https://user-images.githubusercontent.com/47286892/177054243-a5beef03-97d3-4214-ad8a-529079445f22.png">
+<img width="380" alt="image" src="https://user-images.githubusercontent.com/47286892/177054243-a5beef03-97d3-4214-ad8a-529079445f22.png">
 Figure 3: categorical breakdown of overall LSCC changes from pre-SO snapshots to Post-SO snapshots
 
 We further analyse those projects classified as deteriorating to understand if they ever improve again. Intuitively, we classify these projects as fully recovered, partially recovered, or never recovered based on if the project’s cohesion value ever returns to the level of its pre-SO snapshot. Specifically, fully recovered projects return to cohesion levels at or above their pre-SO snapshot and partially recovered projects reach at least half of their previous value which can be seen in figure 4. Answering RQ2 requires these further classifications as we need to compare the code cohesion values of the pre-SO snapshots to later versions in the project’s history. 
 
 Looking at the longer term history of those which fell into the decreasing category for RQ1, our results differ quite a bit from [2]. They had found that, overwhelmingly, the cohesion of these decreasing classes never got back to the level it was before the SO code. However we found that almost half (approximately 49% for both metrics) of all deteriorating classes partially recovered, meaning that they are at least half of the original cohesion value, as did never recover. Furthermore, our results show roughly 9% or deteriorating cases fully recover either metric while [2] shows 18% fully recover.
 
-<img width="463" alt="image" src="https://user-images.githubusercontent.com/47286892/177054264-d6b6b427-2759-452e-9c09-d59d47c074c4.png">
+<img width="450" alt="image" src="https://user-images.githubusercontent.com/47286892/177054264-d6b6b427-2759-452e-9c09-d59d47c074c4.png">
 Figure 4: Overall LSCC and CC recovery status of the deteriorating cases from pre-SO snapshot to the latest commit
 
 Finally we looked at a few individual files to illustrate how LSCC and CC metrics change over time. We chose 3 random files and graphed the metric changes vs the commit number.  Commit 0 is the pre-SO snapshot and commit 1 is the commit where the SO snippet was added. These visualizations can be seen in figures 5, 6, and 7. One interesting thing to note is we happened to get an example of each breakdown of metric changes; Figure 5 shows the metrics improving, figure 6 shows a sharp deterioration and figure 7 shows a constant value from pre-SO to post-SO snapshots.
@@ -89,13 +89,13 @@ From our results and those of [2], we can see a large number of cases in which L
 
 In terms of ethics, there are always information privacy concerns that need to be taken into account when doing data mining. The paper “Ethical Mining: A Case Study on MSR Mining Challenges” specifically about this sort of mining makes the potential ethical issues of this paper (and the one we are replicating) particularly clear [7]. Although we used the SOTorrent Database to get the initial matches, what we really ended up handling the most was data from Github. This included the different file versions and commit information. In particular with the sort of github data we ended up analysing, it’s very easy to trace back data to specific profiles and from there identify the actual author. To this end we take care to not use any specific usernames or identifiers in our paper. Even in the individual timeline graphs, we name them based on the larger project the files were committed to (which each have dozens or hundreds of files and commits) rather than the file names themselves which are much more revealing in terms of authorship.
 
-<img width="545" alt="image" src="https://user-images.githubusercontent.com/47286892/177054306-1a6ad55b-5ca8-401b-9ce8-6b6d8a3478bf.png">
+<img width="500" alt="image" src="https://user-images.githubusercontent.com/47286892/177054306-1a6ad55b-5ca8-401b-9ce8-6b6d8a3478bf.png">
 Figure 5: appinventor-sources project metric change vs commits
 
-<img width="545" alt="image" src="https://user-images.githubusercontent.com/47286892/177054311-a6287380-1444-4b35-a336-b9ba0a81c609.png">
+<img width="500" alt="image" src="https://user-images.githubusercontent.com/47286892/177054311-a6287380-1444-4b35-a336-b9ba0a81c609.png">
 Figure 6: netty project metric change vs commits
 
-<img width="544" alt="image" src="https://user-images.githubusercontent.com/47286892/177054313-0f2c11b5-40a0-4315-9d59-b925e46a6861.png">
+<img width="500" alt="image" src="https://user-images.githubusercontent.com/47286892/177054313-0f2c11b5-40a0-4315-9d59-b925e46a6861.png">
 Figure 7: intellij-community project metric change vs commits
 
 Next we discuss a few potential limitations and threats to validity of our study which mainly are perpetuated from [2].  Firstly, we cannot be certain that when assessing the cohesion of the pre-SO and post-SO snapshots the SO code snippet is the only thing affecting code cohesion. There could be other confounding factors/updates of the code although with a large enough sample size we can expect to mitigate this issue somewhat.  This remains a large threat to validity though as the timeline graphs in figures 5-7 do show that cohesion changes happen throughout a project’s lifetime regardless of adding SO snippets.
