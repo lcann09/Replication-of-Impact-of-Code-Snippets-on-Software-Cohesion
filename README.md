@@ -28,7 +28,8 @@ In comparison to previous papers, [2] takes a somewhat novel approach by instead
 The dataset we use is the SOTorrent dataset [4] which was used as the basis for the MSR 2019 Mining Challenge and is thus the same as in the original paper [2]. This dataset includes a table called PostReferenceGH which links SO posts to GitHub files in which the posts are used or referenced. We use the tool BigQuery from Google to access the database and select our samples [5]. We select samples in the same way as [2], choosing 489 random samples of files which meet our three sample criteria which are as follows. First the files must be in java, as having samples in different languages makes it difficult to get the parameters we will use for our metrics and it is a very popular language. Second, the first commit cannot contain the copied SO snippet since if there is no commit without the SO snippet, we have nothing to compare with the commit containing the snippet. Lastly, the sample must have at least three commits since otherwise we cannot fully assess project cohesion over time in projects with less than three commits. The full process diagram of our workflow can be seen in figure 1.
 
 ![Untitled drawio (2)](https://user-images.githubusercontent.com/47286892/177054079-44f146e8-1ff3-46a9-8808-7741b1f8b143.png)
-_Figure 1: Process Diagram_
+
+Figure 1: Process Diagram
 
 After selecting initial samples with the .java extension from the PostReferenceGH table in SOTorrent, we used the Github API to then identify which samples met the remaining criteria.  For the final dataset we needed the file version just before the SO snippet was introduced, called the pre-SO snapshot and the file version just after, called the post-SO snapshot. For a select subset of the projects classified as deteriorating (see Results section for more details) we also require the file history after the post-SO snapshot. To obtain needed commits, we used GitHub api to find and obtain all of the files that correspond to the chosen samples starting from the post-SO snapshot to the most recent commit. 
 
@@ -48,6 +49,7 @@ In LSCC, k represents the number of methods in the class while l is the number o
 
 
 <img width="400" alt="image" src="https://user-images.githubusercontent.com/47286892/177054179-d0702b06-cae6-438b-8e81-385b961535d5.png">
+
 Table 1: an example MAR
 
 ### Research Questions
@@ -69,9 +71,11 @@ We classify the change values for the cohesion metrics of the pre- and post- SO 
 When comparing our graphs with those of the [2], we obtained surprisingly similar results however we found both a higher percentage of constant (45.3% vs 39% for LSCC and 44.4% vs 42% for CC) and improving (21.8% vs 19% for LSCC and 20.9% vs 16% for CC) cases and thus subsequently a decrease in the deteriorating (32.9% vs 42% for LSCC and 34.7% vs 42% for CC) cases.
 
 <img width="380" alt="image" src="https://user-images.githubusercontent.com/47286892/177054229-e36d19ec-7b19-4776-81ea-1cf4800b6bfd.png">
+
 Figure 2: categorical breakdown of overall CC changes from pre-SO snapshots to Post-SO snapshots
 
 <img width="380" alt="image" src="https://user-images.githubusercontent.com/47286892/177054243-a5beef03-97d3-4214-ad8a-529079445f22.png">
+
 Figure 3: categorical breakdown of overall LSCC changes from pre-SO snapshots to Post-SO snapshots
 
 We further analyse those projects classified as deteriorating to understand if they ever improve again. Intuitively, we classify these projects as fully recovered, partially recovered, or never recovered based on if the project’s cohesion value ever returns to the level of its pre-SO snapshot. Specifically, fully recovered projects return to cohesion levels at or above their pre-SO snapshot and partially recovered projects reach at least half of their previous value which can be seen in figure 4. Answering RQ2 requires these further classifications as we need to compare the code cohesion values of the pre-SO snapshots to later versions in the project’s history. 
@@ -79,6 +83,7 @@ We further analyse those projects classified as deteriorating to understand if t
 Looking at the longer term history of those which fell into the decreasing category for RQ1, our results differ quite a bit from [2]. They had found that, overwhelmingly, the cohesion of these decreasing classes never got back to the level it was before the SO code. However we found that almost half (approximately 49% for both metrics) of all deteriorating classes partially recovered, meaning that they are at least half of the original cohesion value, as did never recover. Furthermore, our results show roughly 9% or deteriorating cases fully recover either metric while [2] shows 18% fully recover.
 
 <img width="450" alt="image" src="https://user-images.githubusercontent.com/47286892/177054264-d6b6b427-2759-452e-9c09-d59d47c074c4.png">
+
 Figure 4: Overall LSCC and CC recovery status of the deteriorating cases from pre-SO snapshot to the latest commit
 
 Finally we looked at a few individual files to illustrate how LSCC and CC metrics change over time. We chose 3 random files and graphed the metric changes vs the commit number.  Commit 0 is the pre-SO snapshot and commit 1 is the commit where the SO snippet was added. These visualizations can be seen in figures 5, 6, and 7. One interesting thing to note is we happened to get an example of each breakdown of metric changes; Figure 5 shows the metrics improving, figure 6 shows a sharp deterioration and figure 7 shows a constant value from pre-SO to post-SO snapshots.
@@ -90,12 +95,15 @@ From our results and those of [2], we can see a large number of cases in which L
 In terms of ethics, there are always information privacy concerns that need to be taken into account when doing data mining. The paper “Ethical Mining: A Case Study on MSR Mining Challenges” specifically about this sort of mining makes the potential ethical issues of this paper (and the one we are replicating) particularly clear [7]. Although we used the SOTorrent Database to get the initial matches, what we really ended up handling the most was data from Github. This included the different file versions and commit information. In particular with the sort of github data we ended up analysing, it’s very easy to trace back data to specific profiles and from there identify the actual author. To this end we take care to not use any specific usernames or identifiers in our paper. Even in the individual timeline graphs, we name them based on the larger project the files were committed to (which each have dozens or hundreds of files and commits) rather than the file names themselves which are much more revealing in terms of authorship.
 
 <img width="500" alt="image" src="https://user-images.githubusercontent.com/47286892/177054306-1a6ad55b-5ca8-401b-9ce8-6b6d8a3478bf.png">
+
 Figure 5: appinventor-sources project metric change vs commits
 
 <img width="500" alt="image" src="https://user-images.githubusercontent.com/47286892/177054311-a6287380-1444-4b35-a336-b9ba0a81c609.png">
+
 Figure 6: netty project metric change vs commits
 
 <img width="500" alt="image" src="https://user-images.githubusercontent.com/47286892/177054313-0f2c11b5-40a0-4315-9d59-b925e46a6861.png">
+
 Figure 7: intellij-community project metric change vs commits
 
 Next we discuss a few potential limitations and threats to validity of our study which mainly are perpetuated from [2].  Firstly, we cannot be certain that when assessing the cohesion of the pre-SO and post-SO snapshots the SO code snippet is the only thing affecting code cohesion. There could be other confounding factors/updates of the code although with a large enough sample size we can expect to mitigate this issue somewhat.  This remains a large threat to validity though as the timeline graphs in figures 5-7 do show that cohesion changes happen throughout a project’s lifetime regardless of adding SO snippets.
